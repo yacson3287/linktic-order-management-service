@@ -19,7 +19,6 @@ public class CompletePurchaseOrderUseCaseImpl implements CompletePurchaseOrderUs
     public PurchaseOrder execute(Long id) {
         var purchaseOrder = findById(id);
         validateStatus(purchaseOrder);
-
         return purchaseOrderRepository.save(purchaseOrder);
     }
 
