@@ -3,10 +3,12 @@ package com.linktic.order_management_service.application.usescases;
 import com.linktic.order_management_service.domain.exceptions.BadRequestExceptionService;
 import com.linktic.order_management_service.domain.exceptions.ExceptionDetail;
 import com.linktic.order_management_service.domain.model.Item;
+import com.linktic.order_management_service.domain.model.Product;
 import com.linktic.order_management_service.domain.model.PurchaseOrder;
 import com.linktic.order_management_service.domain.model.PurchaseStatus;
 import com.linktic.order_management_service.domain.ports.in.AddItemToPurchaseOrderUseCase;
 import com.linktic.order_management_service.domain.ports.out.ItemRepository;
+import com.linktic.order_management_service.domain.ports.out.ProductRepository;
 import com.linktic.order_management_service.domain.ports.out.PurchaseOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,12 +19,21 @@ public class AddItemToPurchaseOrderUseCaseImpl implements AddItemToPurchaseOrder
 
     private final PurchaseOrderRepository purchaseOrderRepository;
     private final ItemRepository itemRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public Item execute(Item item) {
+
         validatePurchaseOrder(item);
+        var product = validateProduct(item);
         item = validateItem(item);
-        return itemRepository.save(item);
+        item = itemRepository.save(item);
+        item.setProduct(product);
+        return item;
+    }
+
+    private Product validateProduct(Item item) {
+        return productRepository.subtractProduct(item.getProduct().getId(), item.getQuantity());
     }
 
     private Item validateItem(Item item) {
