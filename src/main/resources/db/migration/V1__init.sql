@@ -6,3 +6,13 @@ CREATE TABLE "purchase_orders" (
   "status" int,
   "create_at" timestamp
 );
+
+CREATE TABLE "items" (
+  "id" serial PRIMARY KEY,
+  "product_id" bigint,
+  "quantity" int,
+  "create_at" timestamp,
+  "purchase_order_id" bigint
+);
+
+ALTER TABLE "items" ADD FOREIGN KEY ("purchase_order_id") REFERENCES "purchase_orders" ("id");
