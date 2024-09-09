@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -19,6 +21,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public Product findById(Long id) {
         return productCatalogService.findById(id);
+    }
+
+    @Override
+    public List<Product> findByIds(List<Long> ids) {
+        return productCatalogService.findByIds(ids);
     }
 
     @Override
