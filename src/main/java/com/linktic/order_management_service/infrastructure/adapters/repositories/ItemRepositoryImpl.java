@@ -7,6 +7,7 @@ import com.linktic.order_management_service.domain.ports.out.ItemRepository;
 import com.linktic.order_management_service.infrastructure.db.jpa.ItemJPARepository;
 import com.linktic.order_management_service.infrastructure.db.model.ItemEntity;
 import com.linktic.order_management_service.infrastructure.db.model.PurchaseOrderEntity;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     private final ItemJPARepository itemJPARepository;
 
+    @Transactional
     @Override
     public Item save(Item item) {
         var entity = itemJPARepository.save(ItemEntity.convertFromDomain(item));
@@ -26,7 +28,10 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     @Override
     public List<Item> findByPurchaseOrder(PurchaseOrder purchaseOrder) {
-        return List.of();
+        var entities = itemJPARepository.findByPurchaseOrder(PurchaseOrderEntity.convertFromDomain(purchaseOrder));
+        return entities.stream()
+                .map(ItemEntity::convertToDomain)
+                .toList();
     }
 
     @Override
