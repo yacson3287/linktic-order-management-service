@@ -16,6 +16,9 @@ public interface ProductCatalogService {
     @PutMapping("/product/subtract-quantity")
     Product subtractProduct(@RequestBody UpdateQuantityProduct updateQuantityProduct);
 
+    @PutMapping("/product/add-quantity")
+    List<Product> addProduct(@RequestBody List<UpdateQuantityProduct> updateQuantityProduct);
+
     @PostMapping("product/find-by-ids")
     List<Product> findByIds(@RequestBody List<Long> ids);
 
