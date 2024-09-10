@@ -1,6 +1,7 @@
 package com.linktic.order_management_service.infrastructure.adapters.repositories;
 
 import com.linktic.order_management_service.domain.exceptions.BadRequestExceptionService;
+import com.linktic.order_management_service.domain.model.Item;
 import com.linktic.order_management_service.domain.model.Product;
 import com.linktic.order_management_service.domain.ports.out.ProductRepository;
 import com.linktic.order_management_service.infrastructure.adapters.repositories.dto.UpdateQuantityProduct;
@@ -32,7 +33,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     public Product subtractProduct(Long id, int quantity) {
         var updateQuantityProduct = UpdateQuantityProduct
                 .builder()
-                .productId(id)
+                .id(id)
                 .quantity(quantity)
                 .build();
         try {
@@ -45,7 +46,12 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public Product addProduct(Long id, int quantity) {
-        return null;
+    public List<Product> addProduct(List<Item> items) {
+        var puq = items.stream()
+                .map(UpdateQuantityProduct::convertFromItem)
+                .toList();
+        return productCatalogService.addProduct(puq);
     }
+
+
 }

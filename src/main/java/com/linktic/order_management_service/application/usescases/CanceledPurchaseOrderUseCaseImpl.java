@@ -5,6 +5,8 @@ import com.linktic.order_management_service.domain.exceptions.ExceptionDetail;
 import com.linktic.order_management_service.domain.model.PurchaseOrder;
 import com.linktic.order_management_service.domain.model.PurchaseStatus;
 import com.linktic.order_management_service.domain.ports.in.CanceledPurchaseOrderUseCase;
+import com.linktic.order_management_service.domain.ports.out.ItemRepository;
+import com.linktic.order_management_service.domain.ports.out.ProductRepository;
 import com.linktic.order_management_service.domain.ports.out.PurchaseOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,18 +16,22 @@ import org.springframework.stereotype.Service;
 public class CanceledPurchaseOrderUseCaseImpl implements CanceledPurchaseOrderUseCase {
 
     private final PurchaseOrderRepository purchaseOrderRepository;
+    private final ItemRepository itemRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public PurchaseOrder execute(Long id) {
         var purchaseOrder = findById(id);
         validateStatus(purchaseOrder);
+        var items = itemRepository.findByPurchaseOrder(purchaseOrder);
+        productRepository.addProduct(items);
         return purchaseOrderRepository.save(purchaseOrder);
     }
 
     private void validateStatus(PurchaseOrder purchaseOrder) {
-        if (PurchaseStatus.COMPLETE == purchaseOrder.getStatus()) {
+        if (PurchaseStatus.PENDING != purchaseOrder.getStatus()) {
             var exception = new ExceptionDetail("It isn't possible completed this operation");
-            exception.addDetail("status", "This Order was completed");
+            exception.addDetail("status", "This order is not active");
             throw new BadRequestExceptionService(exception);
         }
         purchaseOrder.setStatus(PurchaseStatus.CANCELED);
