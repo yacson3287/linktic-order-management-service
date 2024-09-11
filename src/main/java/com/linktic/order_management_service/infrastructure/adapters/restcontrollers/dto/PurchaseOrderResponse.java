@@ -18,6 +18,9 @@ public class PurchaseOrderResponse {
     private Long id;
     private PurchaseStatus status;
     private LocalDateTime createAt;
+    private String name;
+    private String email;
+    private String mailingAddress;
 
     public static PurchaseOrderResponse convertFromDomain(PurchaseOrder purchaseOrder) {
         return new ModelMapper().map(purchaseOrder, PurchaseOrderResponse.class);
