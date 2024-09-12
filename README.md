@@ -73,7 +73,7 @@ Las etapas del pipeline son:
 
 Los archivos del pipeline se encuentra en cada servicio en el directorio **jenkins/Jenkinsfile**
 
-## nstrucciones para levantar los servicios
+## Instrucciones para levantar los servicios
 
 **Requerimientos**
 * Java 21
