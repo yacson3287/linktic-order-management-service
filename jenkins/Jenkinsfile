@@ -34,7 +34,7 @@ pipeline{
         stage('Build'){
              steps{
                 script {
-                    //echo mi rama es ${PIPELINE_NAME}
+                    echo mi rama es ${BRANCH_NAME}
                     def branchName = env.BRANCH_NAME
                     echo "Construyendo rama: ${branchName}"
 
