@@ -18,7 +18,8 @@ Cada microservicio consta de un modelo de Datos muy simplificado para el caso:
 
 **Product-catalog-service**
 
-![](/home/yacson/Imágenes/Captura de pantalla de 2024-09-12 02-56-53.png)
+![image](https://github.com/user-attachments/assets/38479723-2a41-472e-8872-763117786f35)
+
 
 **Order-management-services**
 
