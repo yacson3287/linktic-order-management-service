@@ -2,8 +2,7 @@ pipeline{
     agent any
     environment {
             PIPELINE_NAME = "${env.JOB_NAME}"
-            BRANCH_NAME = "${env.BRANCH_NAME}"
-        }
+    }
     stages{
         stage('Test'){
               agent {
@@ -34,10 +33,7 @@ pipeline{
         stage('Build'){
              steps{
                 script {
-                   def branchName = env.BRANCH_NAME
-                   echo "Construyendo rama: ${branchName}"
-
-                    //sh 'docker build -t linktic/order-management-service:${BRANCH_NAME} .'
+                  sh 'docker build -t linktic/order-management-service .'
                 }
              }
         }
