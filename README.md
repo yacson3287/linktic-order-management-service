@@ -23,7 +23,8 @@ Cada microservicio consta de un modelo de Datos muy simplificado para el caso:
 
 **Order-management-services**
 
-![](/home/yacson/Imágenes/Captura de pantalla de 2024-09-12 02-58-18.png)
+![image](https://github.com/user-attachments/assets/68686bdd-8f7e-47f0-858d-dd81abf12b9a)
+
 
 ## Arquitectura de servicios
 
