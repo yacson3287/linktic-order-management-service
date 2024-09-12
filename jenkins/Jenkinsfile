@@ -27,13 +27,26 @@ pipeline{
                 sh 'mvn -DskipTests clean package'
                 sh 'cp -R target/ /var/jenkins_home/workspace/${PIPELINE_NAME}/target'
             }
-
            }
         }
         stage('Build'){
              steps{
                 script {
                   sh 'docker build -t linktic/order-management-service .'
+                }
+             }
+        }
+        stage('Registry'){
+             steps{
+                script {
+                  sh 'echo Se sube la imagen docker al servicio cluod utilizado'
+                }
+             }
+        }
+        stage('Deploy'){
+             steps{
+                script {
+                  sh 'echo Se hace el despliegue del servicio con la estrategia que se defina en la infra'
                 }
              }
         }
