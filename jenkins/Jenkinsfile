@@ -34,7 +34,7 @@ pipeline{
         stage('Build'){
              steps{
                 script {
-                    sh 'docker build -t gcr.io/icube01/order-management-service .'
+                    sh 'docker build -t linktic/order-management-service:${BRANCH_NAME} .'
                 }
              }
         }
