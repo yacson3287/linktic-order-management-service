@@ -34,9 +34,8 @@ pipeline{
         stage('Build'){
              steps{
                 script {
-                    sh 'echo mi rama es ${BRANCH_NAME}'
-                    //def branchName = env.BRANCH_NAME
-                  //  echo "Construyendo rama: ${branchName}"
+                   def branchName = env.BRANCH_NAME
+                   echo "Construyendo rama: ${branchName}"
 
                     //sh 'docker build -t linktic/order-management-service:${BRANCH_NAME} .'
                 }
